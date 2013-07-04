@@ -53,6 +53,7 @@
 	      viewport: object containing x, y, resolution, rotation of initial view
 	      winResize: whether view is reflowed on window resize. Default true
 	      preload: load extra surrounding tiles
+              navoutcontainer: the id of the div element in which to create the navigation module (Default to main div)
 
    Note: Requires mootools version 1.4 or later <http://www.mootools.net>
        : The page MUST have a standard-compliant HTML declaration at the beginning
@@ -79,6 +80,8 @@ var IIPMooViewer = new Class({
     this.server = options.server || '/fcgi-bin/iipsrv.fcgi';
 
     this.render = options.render || 'spiral';
+    
+    this.navoutcontainer = options.navoutcontainer || main_id;
 
     // Set the initial zoom resolution and viewport - if it's not been set manually, check for a hash tag
     this.viewport = null;
@@ -1024,6 +1027,7 @@ var IIPMooViewer = new Class({
 
     // Setup our class
     this.container = document.id(this.source);
+    this.navoutcontainer = document.id(this.navoutcontainer);
     this.container.addClass( 'iipmooviewer' );
 
     // Use a lexical closure rather than binding to pass this to anonymous functions
@@ -1191,7 +1195,7 @@ var IIPMooViewer = new Class({
     // Calculate some sizes and create the navigation window
     this.calculateSizes();
     if( this.navigation){
-      this.navigation.create(this.container);
+      this.navigation.create(this.navoutcontainer);
       this.navigation.setImage(this.protocol.getThumbnailURL(this.server,this.images[0].src,this.navigation.size.x));
       this.navigation.addEvents({
 	'zoomIn': function(){
