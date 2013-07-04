@@ -873,7 +873,12 @@ var IIPMooViewer = new Class({
   /* Zoom out by a factor of 2
    */
   zoomOut: function(){
-    if( this.view.res > 0 ) this.zoomTo( this.view.res-1 );
+      /**
+       * Zooming only if the image is not already fully visible
+       */
+      if(this.view.w < this.wid)  {      
+        if( this.view.res > 0 ) this.zoomTo( this.view.res-1 );
+      }
   },
 
 
