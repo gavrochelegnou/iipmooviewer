@@ -28,12 +28,13 @@ var Navigation = new Class({
 
   /* Constructor
    */
-  initialize: function( options ){
+  initialize: function(iip,options){
     this.options.showNavWindow = (options.showNavWindow == false) ? false : true;
     this.options.showNavButtons = (options.showNavButtons == false) ? false : true;
     this.options.navWinSize = options.navWinSize || 0.2;
     this.options.showCoords = (options.showCoords == true) ? true : false;
     this.prefix = options.prefix;
+    this.iip = iip;
   },
 
 
@@ -262,6 +263,8 @@ var Navigation = new Class({
 
       if( this.options.showCoords ) this.coords.setStyle( 'top', this.size.y-6 );
     }
+    
+    this.setImage(this.iip.protocol.getThumbnailURL(this.iip.server, this.iip.images[0].src, this.size.x));
 
   },
 
