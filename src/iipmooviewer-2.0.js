@@ -53,7 +53,8 @@
  viewport: object containing x, y, resolution, rotation of initial view
  winResize: whether view is reflowed on window resize. Default true
  preload: load extra surrounding tiles
- navoutcontainer: the id of the div element in which to create the navigation module (Default to main div)
+ navoutcontainer: the id of the div element in which to create the navigation module. Default to main div
+ infologo: Wether or not to show the iip logo and info window. Default true
  
  Note: Requires mootools version 1.4 or later <http://www.mootools.net>
  : The page MUST have a standard-compliant HTML declaration at the beginning
@@ -182,6 +183,8 @@ var IIPMooViewer = new Class({
         // Preload tiles surrounding view window?
         this.preload = (options.preload == true) ? true : false;
         this.effects = false;
+        
+        this.infologo = (options.infologo == false) ? false : true;
 
         // Set up our annotations if they have been set and our annotation functions implemented
         this.annotations = ((typeof(this.initAnnotationTips) == "function") && options.annotations) ? options.annotations : null;
@@ -1226,21 +1229,23 @@ var IIPMooViewer = new Class({
 
 
         // Add our logo and a tooltip explaining how to use the viewer
-        var info = new Element('img', {
-            'src': this.prefix + 'iip.32x32.png',
-            'class': 'logo',
-            'title': IIPMooViewer.lang.help,
-            'events': {
-                click: function() {
-                    _this.container.getElement('div.info').fade(0.95);
-                },
-                // Prevent user from dragging image
-                mousedown: function(e) {
-                    var event = new DOMEvent(e);
-                    event.stop();
+        if(this.infologo) {
+            var info = new Element('img', {
+                'src': this.prefix + 'iip.32x32.png',
+                'class': 'logo',
+                'title': IIPMooViewer.lang.help,
+                'events': {
+                    click: function() {
+                        _this.container.getElement('div.info').fade(0.95);
+                    },
+                    // Prevent user from dragging image
+                    mousedown: function(e) {
+                        var event = new DOMEvent(e);
+                        event.stop();
+                    }
                 }
-            }
-        }).inject(this.container);
+            }).inject(this.container);
+        }
 
 
         // Add some information or credit
